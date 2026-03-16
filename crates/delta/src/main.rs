@@ -91,6 +91,7 @@ pub async fn web() -> Rocket<Build> {
         .mount("/swagger/", swagger)
         .manage(db)
         .manage(amqp)
+        .manage(kafka_client)
         .manage(cors.clone())
         .manage(voice_client)
         .manage(ratelimits)
