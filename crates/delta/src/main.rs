@@ -14,7 +14,7 @@ use revolt_ratelimits::rocket as ratelimiter;
 use rocket::{Build, Rocket};
 use rocket_cors::{AllowedOrigins, CorsOptions};
 use rocket_prometheus::PrometheusMetrics;
-use util::kafka::KafkaClient;
+use util::osprey::OspreyClient;
 use std::net::Ipv4Addr;
 use std::str::FromStr;
 
@@ -80,8 +80,8 @@ pub async fn web() -> Rocket<Build> {
     // Ratelimits
     let ratelimits = ratelimiter::RatelimitStorage::new(util::ratelimits::DeltaRatelimits);
 
-    // Kafka
-    let kafka_client = KafkaClient::connect("".to_string());
+    // Osprey
+    let osprey_client = OspreyClient::connect("http://localhost:14706".to_string());
 
     routes::mount(config, rocket)
         .attach(prometheus.clone())
@@ -91,7 +91,7 @@ pub async fn web() -> Rocket<Build> {
         .mount("/swagger/", swagger)
         .manage(db)
         .manage(amqp)
-        .manage(kafka_client)
+        .manage(osprey_client)
         .manage(cors.clone())
         .manage(voice_client)
         .manage(ratelimits)

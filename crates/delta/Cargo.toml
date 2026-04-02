@@ -87,8 +87,5 @@ livekit-protocol = { workspace = true }
 [dev-dependencies]
 revolt-config = { workspace = true, features = ["test"] }
 
-# kafka
-rdkafka = "0.39.0"
-
 [build-dependencies]
 vergen = { workspace = true }

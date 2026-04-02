@@ -3,4 +3,4 @@ pub mod ratelimits;
 
 #[cfg(test)]
 pub mod test;
-pub mod kafka;
+pub mod osprey;

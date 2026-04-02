@@ -1094,6 +1094,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "axum-macros"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "604fde5e028fea851ce1d8570bbdc034bec850d157f7569d10f347d06808c05c"
+dependencies = [
+ "proc-macro2",
+ "quote 1.0.40",
+ "syn 2.0.106",
+]
+
+[[package]]
 name = "axum_typed_multipart"
 version = "0.12.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -7464,7 +7475,7 @@ name = "revolt-autumn"
 version = "0.16.0"
 dependencies = [
  "axum",
- "axum-macros",
+ "axum-macros 0.4.2",
  "axum_typed_multipart",
  "ffprobe",
  "image",
@@ -7660,7 +7671,6 @@ dependencies = [
  "num_enum",
  "once_cell",
  "rand 0.8.5",
- "rdkafka",
  "redis-kiss",
  "regex",
  "reqwest 0.13.4",
@@ -7785,6 +7795,25 @@ dependencies = [
  "serde_json",
  "utoipa",
  "validator",
+]
+
+[[package]]
+name = "revolt-ospreyd"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "axum-macros 0.5.0",
+ "chrono",
+ "rdkafka",
+ "revolt-config",
+ "revolt-database",
+ "revolt-models",
+ "revolt-result",
+ "serde",
+ "serde_json",
+ "tokio 1.49.0",
+ "tracing",
+ "ulid 0.4.1",
 ]
 
 [[package]]
