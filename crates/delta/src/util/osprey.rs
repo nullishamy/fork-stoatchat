@@ -13,10 +13,9 @@ impl OspreyClient {
             "event_type": "MessageCreate",
             "data": m
         });
-        let res = self.0.post(format!("{}/ingest", self.1))
+        self.0.post(format!("{}/ingest", self.1))
             .json(&json)
             .send()
             .await;
-        dbg!(res);
     }
 }

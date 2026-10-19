@@ -26,7 +26,7 @@ use crate::util::osprey::OspreyClient;
 pub async fn message_send(
     db: &State<Database>,
     amqp: &State<AMQP>,
-    osprey: &State<OspreyClient>,
+    osprey: &State<Option<OspreyClient>>,
     user: User,
     target: Reference<'_>,
     data: Json<v0::DataMessageSend>,
@@ -192,7 +192,9 @@ pub async fn message_send(
         .await?
         .into_model(Some(model_user), model_member);
 
-    osprey.publish_message(&m).await;
+    if let Some(osprey) = &**osprey {
+        osprey.publish_message(&m).await;
+    }
     
     Ok(Json(m))
 }

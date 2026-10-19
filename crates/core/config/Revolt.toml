@@ -363,4 +363,7 @@ gifbox = ""
 ospreyd = ""
 
 [ospreyd]
+enabled = false
 kafka = "127.0.0.1:9092"
+# delta => ospreyd
+host = "127.0.0.1:14706"
