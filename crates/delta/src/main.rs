@@ -81,7 +81,11 @@ pub async fn web() -> Rocket<Build> {
     let ratelimits = ratelimiter::RatelimitStorage::new(util::ratelimits::DeltaRatelimits);
 
     // Osprey
-    let osprey_client = OspreyClient::connect("http://localhost:14706".to_string());
+    let osprey_client = if config.ospreyd.enabled {
+        Some(OspreyClient::connect(config.ospreyd.host.clone()))
+    } else {
+        None
+    };
 
     routes::mount(config, rocket)
         .attach(prometheus.clone())
