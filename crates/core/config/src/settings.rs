@@ -422,7 +422,13 @@ pub struct Sentry {
     pub proxy: String,
     pub pushd: String,
     pub crond: String,
+    pub ospreyd: String,
     pub gifbox: String,
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct Ospreyd {
+    pub kafka: String
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -436,6 +442,7 @@ pub struct Settings {
     pub files: Files,
     pub features: Features,
     pub sentry: Sentry,
+    pub ospreyd: Ospreyd,
     pub production: bool,
     pub environment: String,
     pub disable_events_dont_use: bool,
