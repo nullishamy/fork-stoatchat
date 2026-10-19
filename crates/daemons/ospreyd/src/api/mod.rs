@@ -1,4 +1,4 @@
-use tracing::{info};
+use tracing::{info, debug};
 
 use serde::{Serialize, Deserialize};
 use revolt_models::v0;
@@ -10,8 +10,6 @@ use axum::{
 use chrono::Utc;
 use crate::AppState;
 
-
-
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(tag = "event_type")]
 pub enum IngestEvent {
@@ -22,7 +20,7 @@ pub async fn ingest(
     State(app): State<AppState>,
     Json(payload): Json<IngestEvent>,
 ) {
-    info!("Ingesting {:?}", payload);
+    debug!("Ingesting {:?}", payload);
     match payload {
         IngestEvent::MessageCreate { data } => {
             let action_id = ulid::Ulid::from_string(&data.id)
@@ -36,7 +34,6 @@ pub async fn ingest(
                     "action_name": "create_post",
                     "data": {
                         "user_id": data.author,
-                        "ip_address": "127.0.0.1",
                         "event_type": "create_post",
                         "post": {
                             "text": data.content.clone().unwrap_or_default()
@@ -49,7 +46,13 @@ pub async fn ingest(
                 .payload(&payload)
                 .key(&data.id);
             
-            dbg!(app.kafka.enqueue(record).await.unwrap());
+            debug!("{:#?}", app
+                .kafka
+                .enqueue(record)
+                .await
+                .map_err(|err| {
+                    revolt_config::capture_internal_error!(err);
+                }));
         }
     }
 }

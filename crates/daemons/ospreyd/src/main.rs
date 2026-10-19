@@ -37,7 +37,7 @@ struct ExecutionResult {
     __action_id: u64,
     __timestamp: String,
     __error_count: u16, 
-    __entity_label_mutations: Vec<String>, 
+    __entity_label_mutations: Option<Vec<String>>, 
     ActionName: String,
     UserId: String,
     EventType: String, 
@@ -54,10 +54,12 @@ async fn main() -> Result<(), tokio::io::Error> {
     // Configure logging and environment
     revolt_config::configure!(ospreyd);
 
+    let config = revolt_config::config().await;
+
     info!("Starting Axum");
 
     let db = DatabaseInfo::Auto.connect().await.unwrap();
-    let kafka = kafka::KafkaClient::connect("127.0.0.1:9092".to_string());
+    let kafka = kafka::KafkaClient::connect(config.ospreyd.kafka.clone());
 
     let state = AppState {
         db,
@@ -77,7 +79,7 @@ async fn main() -> Result<(), tokio::io::Error> {
     let kafka_f = tokio::spawn(async move {
         let consumer: StreamConsumer = {
             ClientConfig::new()
-                .set("bootstrap.servers", "127.0.0.1:9092")
+                .set("bootstrap.servers", config.ospreyd.kafka)
                 .set("group.id", "osprey")
                 .set("enable.partition.eof", "false")
                 .set("session.timeout.ms", "6000")
