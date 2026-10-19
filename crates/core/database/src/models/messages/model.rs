@@ -625,7 +625,7 @@ impl Message {
         Ok(message)
     }
 
-    /// Send a message without any notificationshmm i mean ampq 
+    /// Send a message without any notification
     pub async fn send_without_notifications(
         &mut self,
         db: &Database,
