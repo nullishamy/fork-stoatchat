@@ -428,6 +428,7 @@ pub struct Sentry {
 #[derive(Deserialize, Debug, Clone)]
 pub struct Ospreyd {
     pub enabled: bool,
+    pub port: u16,
     pub kafka: String,
     pub host: String
 }

@@ -47,8 +47,6 @@ struct ExecutionResult {
     __ban_user: Option<Vec<String>>
 }
 
-const PORT: u16 = 14706;
-
 #[tokio::main]
 async fn main() -> Result<(), tokio::io::Error> {
     // Configure logging and environment
@@ -72,7 +70,7 @@ async fn main() -> Result<(), tokio::io::Error> {
         .with_state(state);
 
     // Configure TCP listener and bind
-    let address = SocketAddr::from((Ipv4Addr::UNSPECIFIED, PORT));
+    let address = SocketAddr::from((Ipv4Addr::UNSPECIFIED, config.ospreyd.port));
     let listener = TcpListener::bind(&address).await?;
     let axum_f = axum::serve(listener, app.into_make_service());
 

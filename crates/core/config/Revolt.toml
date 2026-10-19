@@ -362,6 +362,7 @@ ospreyd = ""
 
 [ospreyd]
 enabled = false
+port = 14706 
 kafka = "127.0.0.1:9092"
 # delta => ospreyd
 host = "127.0.0.1:14706"
