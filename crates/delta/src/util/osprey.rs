@@ -13,7 +13,7 @@ impl OspreyClient {
             "event_type": "MessageCreate",
             "data": m
         });
-        self.0.post(format!("{}/ingest", self.1))
+        self.0.post(format!("http://{}/ingest", self.1))
             .json(&json)
             .send()
             .await;
