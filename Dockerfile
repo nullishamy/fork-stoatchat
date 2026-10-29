@@ -5,7 +5,7 @@ WORKDIR /home/rust/src
 
 ARG TARGETARCH
 
-ARG CARGO_BUILD_JOBS=10
+ARG CARGO_BUILD_JOBS=5
 ENV CARGO_BUILD_JOBS=${CARGO_BUILD_JOBS}
 
 # Install build requirements
@@ -13,6 +13,7 @@ RUN dpkg --add-architecture "${TARGETARCH}"
 RUN apt-get update && \
     apt-get install -y \
     make \
+    g++ \
     pkg-config \
     libdav1d-dev:"${TARGETARCH}" \
     libssl-dev:"${TARGETARCH}"
