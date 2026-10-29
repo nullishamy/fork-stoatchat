@@ -39,6 +39,7 @@ COPY crates/services/january/Cargo.toml ./crates/services/january/
 COPY crates/services/gifbox/Cargo.toml ./crates/services/gifbox/
 COPY crates/daemons/crond/Cargo.toml ./crates/daemons/crond/
 COPY crates/daemons/pushd/Cargo.toml ./crates/daemons/pushd/
+COPY crates/daemons/ospreyd/Cargo.toml ./crates/daemons/ospreyd/
 COPY crates/daemons/voice-ingress/Cargo.toml ./crates/daemons/voice-ingress/
 RUN sh /tmp/build-image-layer.sh deps
 
